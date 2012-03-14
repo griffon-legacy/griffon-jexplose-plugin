@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
@@ -19,30 +19,81 @@
  */
 class JexploseGriffonPlugin {
     // the plugin version
-    def version = "0.2"
+    String version = '0.3'
     // the version or versions of Griffon the plugin is designed for
-    def griffonVersion = '0.9.2 > *' 
+    String griffonVersion = '0.9.5 > *'
     // the other plugins this plugin depends on
-    def dependsOn = [:]
+    Map dependsOn = [swing: '0.9.5']
     // resources that are included in plugin packaging
-    def pluginIncludes = []
+    List pluginIncludes = []
     // the plugin license
-    def license = 'Apache Software License 2.0'
+    String license = 'Apache Software License 2.0'
     // Toolkit compatibility. No value means compatible with all
     // Valid values are: swing, javafx, swt, pivot, gtk
-    def toolkits = ['swing']
+    List toolkits = ['swing']
     // Platform compatibility. No value means compatible with all
     // Valid values are:
     // linux, linux64, windows, windows64, macosx, macosx64, solaris
-    def platforms = []
+    List platforms = []
+    // URL where documentation can be found
+    String documentation = ''
+    // URL where source can be found
+    String source = 'https://github.com/griffon/griffon-jexplose-plugin'
 
-    def author = 'Andres Almiray'
-    def authorEmail = 'aalmiray@users.sourceforge.net'
-    def title = 'Expose-like effect for DesktopPanes'
-    def description = '''
-Expose-like effect for DesktopPanes
+    List authors = [
+        [
+            name: 'Andres Almiray',
+            email: 'aalmiray@yahoo.com'
+        ]
+    ]
+    String title = 'Exposé effect on DesktopPanes'
+    String description = '''
+Apply an Exposé effect to any JDesktopPane. JExplose was originally developed at [Jayasoft][1] and was later contributed to 
+the [jndc-incubator][2] project.
+
+Usage
+-----
+
+The following methods become available on View scripts upon installing this plugin
+
+ * **explose(JDesktopPane d)** - triggers the explose animation on a `JDesktopPane`.
+ * **explose(Explosable e)** - triggers the explose animation on an `Explosable`.
+ * **registerExploseHotKey(target, key)** - register a key listener than will explose the specified target. The target argument
+ may be an `Explosable` or a `JDesktopPane`. The key argument may be a `KeyStroke`, a `String` or an `int`.
+
+### Example
+
+The following example registers a hot key (`meta - X`) and a [MouseGesture][3] to trigger the explosion of the desktop
+
+        import org.jdesktop.swingx.jexplose.JExplose
+        application(title: 'Griffon + JExplose',
+          pack: true,
+          locationByPlatform:true,
+          iconImage: imageIcon('/griffon-icon-48x48.png').image,
+          iconImages: [imageIcon('/griffon-icon-48x48.png').image,
+                       imageIcon('/griffon-icon-32x32.png').image,
+                       imageIcon('/griffon-icon-16x16.png').image]) {
+            desktopPane(id: 'desktop', preferredSize: [430, 330]) {
+                (1..10).each { i ->
+                    internalFrame(title: "Frame $i",
+                                  iconifiable: true, maximizable: true, resizable: true,
+                                  size: [150, 150], location: [20*i, 20*i], visible: true) {
+                        borderLayout()
+                        label "Frame $i", constraints: CENTER
+                    }
+                }
+            }
+            registerExploseHotKey(desktop, shortcut('X'))
+            JExplose.instance.background = getClass().getResource('/griffon.png')
+            mouseGestures(start: true) {
+                onProcessGesture { String gesture ->
+                    if(gesture == 'R') explose(desktop)
+                }
+            }
+        }
+
+[1]: http://www.jaya.free.fr/jexplose.html
+[2]: https://jdnc-incubator.dev.java.net/source/browse/jdnc-incubator/trunk/src/xhanin/
+[3]: /plugin/mousegestures
 '''
-
-    // URL to the plugin's documentation
-    def documentation = 'http://griffon.codehaus.org/Jexplose+Plugin'
 }
