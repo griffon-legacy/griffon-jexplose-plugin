@@ -19,11 +19,11 @@
  */
 class JexploseGriffonPlugin {
     // the plugin version
-    String version = '0.3'
+    String version = '1.0.0'
     // the version or versions of Griffon the plugin is designed for
-    String griffonVersion = '0.9.5 > *'
+    String griffonVersion = '1.0.0 > *'
     // the other plugins this plugin depends on
-    Map dependsOn = [swing: '0.9.5']
+    Map dependsOn = [swing: '1.0.0']
     // resources that are included in plugin packaging
     List pluginIncludes = []
     // the plugin license
@@ -48,7 +48,7 @@ class JexploseGriffonPlugin {
     ]
     String title = 'Exposé effect on DesktopPanes'
     String description = '''
-Apply an Exposé effect to any JDesktopPane. JExplose was originally developed at [Jayasoft][1] and was later contributed to 
+Apply an Expose effect to any JDesktopPane. JExplose was originally developed at [Jayasoft][1] and was later contributed to 
 the [jndc-incubator][2] project.
 
 Usage
@@ -61,7 +61,7 @@ The following methods become available on View scripts upon installing this plug
  * **registerExploseHotKey(target, key)** - register a key listener than will explose the specified target. The target argument
  may be an `Explosable` or a `JDesktopPane`. The key argument may be a `KeyStroke`, a `String` or an `int`.
 
-### Example
+### Example
 
 The following example registers a hot key (`meta - X`) and a [MouseGesture][3] to trigger the explosion of the desktop
 

@@ -43,7 +43,7 @@ class JexploseGriffonAddon {
         }
     }
 
-    def factories = [
+    Map factories = [
         explosableDesktop: ExplosableDesktop
     ]
 
